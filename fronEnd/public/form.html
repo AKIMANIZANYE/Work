@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Demo app</title>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container" id="status">
+  <h2> Customer Details</h2>
+
+  <form >
+    Customer ID:<br>
+    <input type="number" name="id" value="" id="id">
+    <br>
+    Customer Name:<br>
+    <input type="text" name="name" value="" id="name">
+    <br><br>
+  Email:<br>
+    <input type="text" name="name" value="" id="email">
+    <br><br>
+  Gender:<br>
+    <input type="text" name="name" value="" id="gender">
+  
+    <button  id ="button"> submit</button > 
+    
+  </form> 
+</div>
+
+<script>
+  // using jquery AJAX call we can send data to nodejs backend
+  $(document).ready(function () {
+    console.log('hello')
+      $(button).click(function () {
+          $.post("http://localhost:1234/api/customer",
+              
+              {
+                customerId: document.getElementById("id").value,
+                customersName: document.getElementById("name").value,
+                email:document.getElementById("email").value,
+                Gender:document.getElementById("gender").value
+                
+              },
+              
+              function (data,status) {
+                  document.getElementById("status").innerHTML= data+ " status: " + status ;
+              });
+              console.log('testing');
+      });
+  });
+</script>
+</body>
+
+
+
+</html>
