@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
+app.use(cors());
 const mysql = require('mysql');
   
 const bodyParser =require('body-parser');
@@ -18,11 +20,12 @@ const dbConn = mysql.createConnection({
     
 });
 dbConn.connect((error)=>{
-    if(error) {console.log('database connected')
+    if(!error) {
+        console.log('database connected')
 }});
 
 
-console.log('database connected')
+
   
 //POST API  for customer      
 app.post('/api/customer',(req,res)=>{
@@ -30,12 +33,12 @@ app.post('/api/customer',(req,res)=>{
    
  dbConn.query('INSERT INTO Customers SET customerId = ?,CustomersName = ?, email= ?,Gender= ?',[customer.customerId, customer.CustomersName, customer.email,customer.Gender],function(err,rows,fields){
     if(!err){
-        res.send('successfull send')
+        res.send(+ 'successfull send')
         console.log(rows)
     }else{
         //
         console.log(err)
-        res.send(' data not a  sent')
+        res.send(' data not sent')
     }
 })     
 });

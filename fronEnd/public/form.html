@@ -27,29 +27,35 @@
     
   </form> 
 </div>
-
 <script>
   // using jquery AJAX call we can send data to nodejs backend
   $(document).ready(function () {
-    console.log('hello')
       $(button).click(function () {
-          $.post("http://localhost:1234/api/customer",
+
+          const customerId = document.getElementById("id").value
+          const CustomersName = document.getElementById("name").value
+          const email = document.getElementById("email").value
+          const Gender = document.getElementById("gender").value	
+          const requestData={"customerId":customerId,"CustomersName":CustomersName,"email":email,"Gender":Gender};
+          $.post({
+              url: 'http://localhost:5000/api/customer',
+              contentType: 'application/json',
+              data: JSON.stringify(requestData),
               
-              {
-                customerId: document.getElementById("id").value,
-                customersName: document.getElementById("name").value,
-                email:document.getElementById("email").value,
-                Gender:document.getElementById("gender").value
-                
+              
+              error: function (error) { 
+                  console.log("error"+ error);
+                  alert("error"+JSON.stringify(error)) 
               },
-              
-              function (data,status) {
-                  document.getElementById("status").innerHTML= data+ " status: " + status ;
-              });
-              console.log('testing');
+              success: function (response) { 
+                  console.log(response);
+                  alert("success"+ response) 
+              }
+          });
       });
   });
 </script>
+
 </body>
 
 
